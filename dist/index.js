@@ -101,7 +101,7 @@ var getWorkHistory = function getWorkHistory(cb) {
 };
 
 server.get('/', function (req, res, next) {
-  var index = ['/word-history', '/open-source', '/education', '/skills'];
+  var index = ['http://api.maxmckenzie.uk/details', 'http://api.maxmckenzie.uk/work-history', 'http://api.maxmckenzie.uk/open-source', 'http://api.maxmckenzie.uk/education', 'http://api.maxmckenzie.uk/skills'];
   res.send(index);
   return next();
 });
