@@ -16,3 +16,7 @@ Portfolio as an API, Data is scraped from github/stackoverflow. At some point it
 
 ## /work-history
 `GET api.maxmckenzie.uk/education`
+
+# Todo
+- add super test tests https://www.npmjs.com/package/supertest
+- save scraped data to file/DB and scrape on cron job
