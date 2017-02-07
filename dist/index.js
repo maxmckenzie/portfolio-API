@@ -36,7 +36,8 @@ var getProjects = function getProjects(cb) {
   _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.project').set({
     'title': '.timeline-item-title',
     'description': '.timeline-item-paragraph .description-content-full > p',
-    'date': '.timeline-item-date'
+    'date': '.timeline-item-date',
+    'url': '.timeline-item-title > a@href'
   }).data(function (listing) {
     rs.push(listing);
   }).log(console.log).error(console.log).debug(console.log).done(function () {
