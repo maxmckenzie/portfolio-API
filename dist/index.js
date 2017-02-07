@@ -25,6 +25,11 @@ var server = _restify2.default.createServer({
 server.use(_restifyPlugins2.default.acceptParser(server.acceptable));
 server.use(_restifyPlugins2.default.queryParser());
 server.use(_restifyPlugins2.default.bodyParser());
+server.use(function crossOrigin(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  return next();
+});
 
 var getDetails = function getDetails(cb) {
   var rs = [];
