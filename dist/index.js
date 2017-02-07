@@ -31,6 +31,19 @@ server.use(function crossOrigin(req, res, next) {
   return next();
 });
 
+var getProjects = function getProjects(cb) {
+  var rs = [];
+  _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.project').set({
+    'title': '.timeline-item-title',
+    'description': '.timeline-item-paragraph .description-content-full > p',
+    'date': '.timeline-item-date'
+  }).data(function (listing) {
+    rs.push(listing);
+  }).log(console.log).error(console.log).debug(console.log).done(function () {
+    cb(rs);
+  });
+};
+
 var getDetails = function getDetails(cb) {
   var rs = [];
   _osmosis2.default.get('http://stackoverflow.com/story/maxmckenzie').set({
@@ -141,6 +154,13 @@ server.get('/skills', function (req, res, next) {
 
 server.get('/details', function (req, res, next) {
   getDetails(function (rs) {
+    res.send(rs);
+  });
+  return next();
+});
+
+server.get('/projects', function (req, res, next) {
+  getProjects(function (rs) {
     res.send(rs);
   });
   return next();
