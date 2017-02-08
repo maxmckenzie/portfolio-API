@@ -16,6 +16,14 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _async = require('async');
+
+var _async2 = _interopRequireDefault(_async);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var server = _restify2.default.createServer({
@@ -120,51 +128,41 @@ var getWorkHistory = function getWorkHistory(cb) {
 };
 
 server.get('/', function (req, res, next) {
-  var index = ['http://api.maxmckenzie.uk/details', 'http://api.maxmckenzie.uk/work-history', 'http://api.maxmckenzie.uk/open-source', 'http://api.maxmckenzie.uk/education', 'http://api.maxmckenzie.uk/skills'];
-  res.send(index);
-  return next();
-});
-
-server.get('/work-history', function (req, res, next) {
-  getWorkHistory(function (rs) {
-    res.send(rs);
+  _fs2.default.readFile(process.cwd() + '/dist/data.json', 'utf8', function (err, data) {
+    if (err) throw err;
+    console.log(JSON.parse(data));
+    res.send(JSON.parse(data));
   });
   return next();
 });
 
-server.get('/open-source', function (req, res, next) {
-  getGithubCode(function (rs) {
-    res.send(rs);
+server.get('/scrape', function (req, res, next) {
+  _async2.default.parallel({
+    details: function details(callback) {
+      getDetails(function (rs) {
+        callback(false, rs);
+      });
+    },
+    projects: function projects(callback) {
+      getProjects(function (rs) {
+        callback(false, rs);
+      });
+    },
+    code: function code(callback) {
+      getGithubCode(function (rs) {
+        callback(false, rs);
+      });
+    }
+  }, function (err, results) {
+    if (err) throw err;
+    console.log(results);
+    _fs2.default.writeFile(process.cwd() + '/dist/data.json', JSON.stringify(results), 'utf8', function (err) {
+      if (err) throw err;
+    }, function () {
+      res.send(200);
+      return next();
+    });
   });
-  return next();
-});
-
-server.get('/education', function (req, res, next) {
-  getEducation(function (rs) {
-    res.send(rs);
-  });
-  return next();
-});
-
-server.get('/skills', function (req, res, next) {
-  getSkills(function (rs) {
-    res.send(rs);
-  });
-  return next();
-});
-
-server.get('/details', function (req, res, next) {
-  getDetails(function (rs) {
-    res.send(rs);
-  });
-  return next();
-});
-
-server.get('/projects', function (req, res, next) {
-  getProjects(function (rs) {
-    res.send(rs);
-  });
-  return next();
 });
 
 server.listen(process.env.PORT || 8080, function () {
