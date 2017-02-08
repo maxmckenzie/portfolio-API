@@ -143,6 +143,11 @@ server.get('/scrape', function (req, res, next) {
         callback(false, rs);
       });
     },
+    workhistory: function workhistory(callback) {
+      getWorkHistory(function (rs) {
+        callback(false, rs);
+      });
+    },
     projects: function projects(callback) {
       getProjects(function (rs) {
         callback(false, rs);
@@ -150,6 +155,16 @@ server.get('/scrape', function (req, res, next) {
     },
     code: function code(callback) {
       getGithubCode(function (rs) {
+        callback(false, rs);
+      });
+    },
+    education: function education(callback) {
+      getEducation(function (rs) {
+        callback(false, rs);
+      });
+    },
+    skills: function skills(callback) {
+      getSkills(function (rs) {
         callback(false, rs);
       });
     }
