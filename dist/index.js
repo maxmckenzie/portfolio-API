@@ -43,7 +43,7 @@ var getProjects = function getProjects(cb) {
   var rs = [];
   _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.project').set({
     'title': '.timeline-item-title',
-    'description': '.timeline-item-paragraph .description-content-full > p',
+    'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date',
     'url': '.timeline-item-title > a@href'
   }).data(function (listing) {
@@ -88,7 +88,7 @@ var getEducation = function getEducation(cb) {
   var rs = [];
   _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.education').set({
     'title': '.timeline-item-title',
-    'description': '.timeline-item-paragraph .description-content-full > p',
+    'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
@@ -118,7 +118,7 @@ var getWorkHistory = function getWorkHistory(cb) {
   _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.job').set({
     'title': '.timeline-item-title',
     'tags': ['.timeline-item-tags > span'],
-    'description': '.timeline-item-paragraph .description-content-full > p',
+    'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
