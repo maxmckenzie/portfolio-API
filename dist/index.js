@@ -48,16 +48,18 @@ var getProjects = function getProjects(cb) {
     'url': '.timeline-item-title > a@href'
   }).data(function (listing) {
     rs.push(listing);
-  }).log(console.log).error(console.log).debug(console.log).done(function () {
+  })
+  // .log(console.log)
+  .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
 
 var getDetails = function getDetails(cb) {
   var rs = [];
-  _osmosis2.default.get('http://stackoverflow.com/story/maxmckenzie').set({
-    'location': '.meta .icon-location + span'
-  }).follow('.meta .icon-github + a@href').get('http://stackoverflow.com/users/3593217/xam?tab=badges&sort=recent').set({
+  _osmosis2.default.get('https://github.com/maxmckenzie').set({
+    'location': '.octicon-location + span'
+  }).get('https://stackoverflow.com/users/3593217/xam?tab=badges&sort=recent').set({
     'stackoverflow': {
       'reputation': '.rep-card .rep',
       'badges': ['.user-badges .badge']
@@ -79,7 +81,9 @@ var getSkills = function getSkills(cb) {
     'skills': ['.user-technologies .timeline-item-tags > .post-tag']
   }).data(function (listing) {
     rs.push(listing);
-  }).log(console.log).error(console.log).debug(console.log).done(function () {
+  })
+  // .log(console.log)
+  .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
@@ -92,7 +96,9 @@ var getEducation = function getEducation(cb) {
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
-  }).log(console.log).error(console.log).debug(console.log).done(function () {
+  })
+  // .log(console.log)
+  .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
@@ -108,7 +114,9 @@ var getGithubCode = function getGithubCode(cb) {
     'numbers': ['.numbers-summary li']
   }).data(function (listing) {
     rs.push(listing);
-  }).log(console.log).error(console.log).debug(console.log).done(function () {
+  })
+  // .log(console.log)
+  .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
@@ -122,7 +130,9 @@ var getWorkHistory = function getWorkHistory(cb) {
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
-  }).log(console.log).error(console.log).debug(console.log).done(function () {
+  })
+  // .log(console.log)
+  .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
@@ -170,7 +180,7 @@ server.get('/scrape', function (req, res, next) {
     }
   }, function (err, results) {
     if (err) throw err;
-    console.log(results);
+    // console.log(results)
     _fs2.default.writeFile(process.cwd() + '/dist/data.json', JSON.stringify(results), 'utf8', function (err) {
       if (err) throw err;
     }, function () {
@@ -180,6 +190,6 @@ server.get('/scrape', function (req, res, next) {
   });
 });
 
-server.listen(process.env.PORT || 3000, function () {
+server.listen(process.env.PORT || 5000, function () {
   console.log('%s listening at %s', server.name, server.url);
 });
