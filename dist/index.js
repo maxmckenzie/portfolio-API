@@ -27,7 +27,7 @@ var _async2 = _interopRequireDefault(_async);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var server = _restify2.default.createServer({
-  name: 'jobsbcn-scraper',
+  name: 'scraper',
   version: '1.0.0'
 });
 server.use(_restifyPlugins2.default.acceptParser(server.acceptable));
@@ -180,6 +180,6 @@ server.get('/scrape', function (req, res, next) {
   });
 });
 
-server.listen(process.env.PORT || 8080, function () {
+server.listen(process.env.PORT || 3000, function () {
   console.log('%s listening at %s', server.name, server.url);
 });
