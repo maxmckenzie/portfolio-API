@@ -19,11 +19,11 @@
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
-    "mz": "^2.7.0",
     "nodemon": "^1.19.0"
   },
   "dependencies": {
     "osmosis": "^1.1.2",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mz": "^2.7.0"
   }
 }
