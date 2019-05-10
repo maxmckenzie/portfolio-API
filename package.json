@@ -10,7 +10,10 @@
     "build": "babel lib -d build"
   },
   "nodemonConfig": {
-    "ignore": ["dist/*", "build/*"]
+    "ignore": [
+      "dist/*",
+      "build/*"
+    ]
   },
   "author": "",
   "license": "ISC",
