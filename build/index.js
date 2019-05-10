@@ -2,8 +2,6 @@
 
 var _express = _interopRequireDefault(require("express"));
 
-var _restifyPlugins = _interopRequireDefault(require("restify-plugins"));
-
 var _fs = _interopRequireDefault(require("mz/fs"));
 
 var _scraper = require("./scraper");
@@ -14,9 +12,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var app = (0, _express["default"])(); // app.use(plugins.acceptParser(app.acceptable));
-
-app.use(function crossOrigin(req, res, next) {
+var app = (0, _express["default"])();
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   return next();
@@ -35,35 +32,36 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            res.send('scraping');
+            _context.next = 3;
             return (0, _scraper.getDetails)();
 
-          case 2:
+          case 3:
             details = _context.sent;
-            _context.next = 5;
+            _context.next = 6;
             return (0, _scraper.getProjects)();
 
-          case 5:
+          case 6:
             projects = _context.sent;
-            _context.next = 8;
+            _context.next = 9;
             return (0, _scraper.getEducation)();
 
-          case 8:
+          case 9:
             education = _context.sent;
-            _context.next = 11;
+            _context.next = 12;
             return (0, _scraper.getSkills)();
 
-          case 11:
+          case 12:
             skills = _context.sent;
-            _context.next = 14;
+            _context.next = 15;
             return (0, _scraper.getWorkHistory)();
 
-          case 14:
+          case 15:
             workHistory = _context.sent;
-            _context.next = 17;
+            _context.next = 18;
             return (0, _scraper.getGithubCode)();
 
-          case 17:
+          case 18:
             githubCode = _context.sent;
             console.log({
               details: details,
@@ -73,7 +71,7 @@ function () {
               workHistory: workHistory,
               githubCode: githubCode
             });
-            _context.next = 21;
+            _context.next = 22;
             return _fs["default"].writeFile(process.cwd() + '/dist/data.json', JSON.stringify({
               details: details,
               projects: projects,
@@ -83,11 +81,11 @@ function () {
               githubCode: githubCode
             }), 'utf8');
 
-          case 21:
-            res.send(200);
+          case 22:
+            res.send('<br/>complete');
             res.end();
 
-          case 23:
+          case 24:
           case "end":
             return _context.stop();
         }
