@@ -1,38 +1,27 @@
-'use strict';
+"use strict";
 
-var _restify = require('restify');
+var _restify = _interopRequireDefault(require("restify"));
 
-var _restify2 = _interopRequireDefault(_restify);
+var _restifyPlugins = _interopRequireDefault(require("restify-plugins"));
 
-var _restifyPlugins = require('restify-plugins');
+var _osmosis = _interopRequireDefault(require("osmosis"));
 
-var _restifyPlugins2 = _interopRequireDefault(_restifyPlugins);
+var _request = _interopRequireDefault(require("request"));
 
-var _osmosis = require('osmosis');
+var _fs = _interopRequireDefault(require("fs"));
 
-var _osmosis2 = _interopRequireDefault(_osmosis);
+var _async = _interopRequireDefault(require("async"));
 
-var _request = require('request');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _request2 = _interopRequireDefault(_request);
-
-var _fs = require('fs');
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _async = require('async');
-
-var _async2 = _interopRequireDefault(_async);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var server = _restify2.default.createServer({
+var server = _restify["default"].createServer({
   name: 'scraper',
   version: '1.0.0'
 });
-server.use(_restifyPlugins2.default.acceptParser(server.acceptable));
-server.use(_restifyPlugins2.default.queryParser());
-server.use(_restifyPlugins2.default.bodyParser());
+
+server.use(_restifyPlugins["default"].acceptParser(server.acceptable)); // server.use(plugins.queryParser()
+// server.use(plugins.bodyParser());
+
 server.use(function crossOrigin(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -41,15 +30,15 @@ server.use(function crossOrigin(req, res, next) {
 
 var getProjects = function getProjects(cb) {
   var rs = [];
-  _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.project').set({
+
+  _osmosis["default"].get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.project').set({
     'title': '.timeline-item-title',
     'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date',
     'url': '.timeline-item-title > a@href'
   }).data(function (listing) {
     rs.push(listing);
-  })
-  // .log(console.log)
+  }) // .log(console.log)
   .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
@@ -57,7 +46,8 @@ var getProjects = function getProjects(cb) {
 
 var getDetails = function getDetails(cb) {
   var rs = [];
-  _osmosis2.default.get('https://github.com/maxmckenzie').set({
+
+  _osmosis["default"].get('https://github.com/maxmckenzie').set({
     'location': '.octicon-location + span'
   }).get('https://stackoverflow.com/users/3593217/xam?tab=badges&sort=recent').set({
     'stackoverflow': {
@@ -77,12 +67,12 @@ var getDetails = function getDetails(cb) {
 
 var getSkills = function getSkills(cb) {
   var rs = [];
-  _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').set({
+
+  _osmosis["default"].get('stackoverflow.com/story/maxmckenzie').set({
     'skills': ['.user-technologies .timeline-item-tags > .post-tag']
   }).data(function (listing) {
     rs.push(listing);
-  })
-  // .log(console.log)
+  }) // .log(console.log)
   .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
@@ -90,14 +80,14 @@ var getSkills = function getSkills(cb) {
 
 var getEducation = function getEducation(cb) {
   var rs = [];
-  _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.education').set({
+
+  _osmosis["default"].get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.education').set({
     'title': '.timeline-item-title',
     'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
-  })
-  // .log(console.log)
+  }) // .log(console.log)
   .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
@@ -105,7 +95,8 @@ var getEducation = function getEducation(cb) {
 
 var getGithubCode = function getGithubCode(cb) {
   var rs = [];
-  _osmosis2.default.get('https://github.com/maxmckenzie').find('.pinned-repos-list > li').set({
+
+  _osmosis["default"].get('https://github.com/maxmckenzie').find('.pinned-repos-list > li').set({
     'title': '.repo@title',
     'url': '.pinned-repo-item-content a@href'
   }).follow('.pinned-repo-item-content a@href').set({
@@ -114,8 +105,7 @@ var getGithubCode = function getGithubCode(cb) {
     'numbers': ['.numbers-summary li']
   }).data(function (listing) {
     rs.push(listing);
-  })
-  // .log(console.log)
+  }) // .log(console.log)
   .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
@@ -123,31 +113,31 @@ var getGithubCode = function getGithubCode(cb) {
 
 var getWorkHistory = function getWorkHistory(cb) {
   var rs = [];
-  _osmosis2.default.get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.job').set({
+
+  _osmosis["default"].get('stackoverflow.com/story/maxmckenzie').find('.timeline-item.job').set({
     'title': '.timeline-item-title',
     'tags': ['.timeline-item-tags > span'],
     'description': '.timeline-item-paragraph .description-content-full',
     'date': '.timeline-item-date'
   }).data(function (listing) {
     rs.push(listing);
-  })
-  // .log(console.log)
+  }) // .log(console.log)
   .error(console.log).debug(console.log).done(function () {
     cb(rs);
   });
 };
 
 server.get('/', function (req, res, next) {
-  _fs2.default.readFile(process.cwd() + '/dist/data.json', 'utf8', function (err, data) {
+  _fs["default"].readFile(process.cwd() + '/dist/data.json', 'utf8', function (err, data) {
     if (err) throw err;
     console.log(JSON.parse(data));
     res.send(JSON.parse(data));
   });
+
   return next();
 });
-
 server.get('/scrape', function (req, res, next) {
-  _async2.default.parallel({
+  _async["default"].parallel({
     details: function details(callback) {
       getDetails(function (rs) {
         callback(false, rs);
@@ -179,9 +169,9 @@ server.get('/scrape', function (req, res, next) {
       });
     }
   }, function (err, results) {
-    if (err) throw err;
-    // console.log(results)
-    _fs2.default.writeFile(process.cwd() + '/dist/data.json', JSON.stringify(results), 'utf8', function (err) {
+    if (err) throw err; // console.log(results)
+
+    _fs["default"].writeFile(process.cwd() + '/dist/data.json', JSON.stringify(results), 'utf8', function (err) {
       if (err) throw err;
     }, function () {
       res.send(200);
@@ -189,7 +179,6 @@ server.get('/scrape', function (req, res, next) {
     });
   });
 });
-
 server.listen(process.env.PORT || 5000, function () {
   console.log('%s listening at %s', server.name, server.url);
 });
