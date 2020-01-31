@@ -18,16 +18,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4",
-    "nodemon": "^1.19.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "nodemon": "^1.19.4"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "express": "^4.16.4",
+    "@babel/polyfill": "^7.8.3",
+    "express": "^4.17.1",
     "mz": "^2.7.0",
-    "osmosis": "^1.1.2"
+    "osmosis": "^1.1.10"
   }
 }
