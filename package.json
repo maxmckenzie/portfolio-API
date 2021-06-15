@@ -25,12 +25,11 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/polyfill": "^7.8.3",
+    "@babel/runtime": "^7.14.6",
     "express": "^4.17.1",
     "mz": "^2.7.0",
-    "needle": "2.6.0",
-    "osmosis": "^1.1.2",
-    "puppeteer": "^10.0.0",
-    "scrape-it": "^5.3.1"
+    "puppeteer": "^10.0.0"
   }
 }
