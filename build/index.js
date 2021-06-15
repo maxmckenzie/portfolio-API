@@ -1,16 +1,16 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
 var _express = _interopRequireDefault(require("express"));
 
 var _fs = _interopRequireDefault(require("mz/fs"));
 
 var _scraper = require("./scraper");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 require('@babel/polyfill');
 
@@ -23,71 +23,57 @@ app.use(function (req, res, next) {
 app.get('/', _express["default"]["static"](process.cwd() + '/dist/', {
   index: 'data.json'
 }));
-app.get('/scrape',
-/*#__PURE__*/
-function () {
-  var _ref = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(req, res, next) {
-    var details, projects, education, skills, workHistory, githubCode;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+app.get('/scrape', /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
+    var details, projects, education, skills, workHistory, githubCode, data;
+    return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            res.send('scraping');
-            _context.next = 3;
+            _context.next = 2;
             return (0, _scraper.getDetails)();
 
-          case 3:
+          case 2:
             details = _context.sent;
-            _context.next = 6;
+            _context.next = 5;
             return (0, _scraper.getProjects)();
 
-          case 6:
+          case 5:
             projects = _context.sent;
-            _context.next = 9;
+            _context.next = 8;
             return (0, _scraper.getEducation)();
 
-          case 9:
+          case 8:
             education = _context.sent;
-            _context.next = 12;
+            _context.next = 11;
             return (0, _scraper.getSkills)();
 
-          case 12:
+          case 11:
             skills = _context.sent;
-            _context.next = 15;
+            _context.next = 14;
             return (0, _scraper.getWorkHistory)();
 
-          case 15:
+          case 14:
             workHistory = _context.sent;
-            _context.next = 18;
-            return (0, _scraper.getGithubCode)();
+            githubCode = {}; //await getGithubCode();
 
-          case 18:
-            githubCode = _context.sent;
-            console.log({
+            data = {
               details: details,
               projects: projects,
               education: education,
               skills: skills,
               workHistory: workHistory,
               githubCode: githubCode
-            });
-            _context.next = 22;
-            return _fs["default"].writeFile(process.cwd() + '/dist/data.json', JSON.stringify({
-              details: details,
-              projects: projects,
-              education: education,
-              skills: skills,
-              workHistory: workHistory,
-              githubCode: githubCode
-            }), 'utf8');
+            };
+            console.log(data);
+            _context.next = 20;
+            return _fs["default"].writeFile(process.cwd() + '/dist/data.json', JSON.stringify(data), 'utf8');
 
-          case 22:
-            res.send('<br/>complete');
+          case 20:
+            res.json(data);
             res.end();
 
-          case 24:
+          case 22:
           case "end":
             return _context.stop();
         }
