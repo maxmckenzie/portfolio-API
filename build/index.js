@@ -23,12 +23,8 @@ app.use(function (req, res, next) {
 app.get('/', _express["default"]["static"](process.cwd() + '/dist/', {
   index: 'data.json'
 }));
-app.get('/scrape',
-/*#__PURE__*/
-function () {
-  var _ref = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(req, res, next) {
+app.get('/scrape', /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res, next) {
     var details, projects, education, skills, workHistory, githubCode;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {

@@ -28,6 +28,9 @@
     "@babel/polyfill": "^7.8.3",
     "express": "^4.17.1",
     "mz": "^2.7.0",
-    "osmosis": "^1.1.10"
+    "needle": "2.6.0",
+    "osmosis": "^1.1.2",
+    "puppeteer": "^10.0.0",
+    "scrape-it": "^5.3.1"
   }
 }
